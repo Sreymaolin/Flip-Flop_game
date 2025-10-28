@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Flappy Bird - Khmer Edition</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./flappy-web/css/style.css">
 </head>
 <body>
 
@@ -12,7 +12,7 @@
 <header class="container">
   <div class="game">
     <ul>
-      <li class="site-brand"><img src="./images/download (1).png" alt="FlipFlop logo"><span style="font-weight:700;color:var(--text)">FlipFlop Bird</span></li>
+      <li class="site-brand"><img src="./flappy_images/download (1).png" alt="FlipFlop logo"><span style="font-weight:700;color:var(--text)">FlipFlop Bird</span></li>
       <li><a href="./index.html" class="primary">Game</a></li>
       <li><a href="./leaderboard.html">Leaderboard</a></li>
       <li><a href="./about.html">About</a></li>
@@ -149,8 +149,8 @@ updateUIText();
 diffSel.addEventListener('change', ()=> applyDifficulty());
 function applyDifficulty(){
   const d = diffSel.value;
-  if(d==='easy'){ gapSize=160; pipeSpeed=1.8; pipeInterval=110}
-  if(d==='normal'){ gapSize=140; pipeSpeed=2.2; pipeInterval=100}
+  if(d==='easy'){ gapSize=160; pipeSpeed=1.5; pipeInterval=110}
+  if(d==='normal'){ gapSize=140; pipeSpeed=2.0; pipeInterval=100}
   if(d==='hard'){ gapSize=120; pipeSpeed=2.8; pipeInterval=90}
 }
 applyDifficulty();
@@ -258,7 +258,42 @@ function update(){
 function applyPower(type){ activePower = {type:type, until: Date.now() + 5000}; if(type==='shield'){} if(type==='slow'){} if(type==='double'){}
 }
 
-function endGame(){ if(gameOver) return; gameOver = true; running=false; playSound(aud.die); statusMessage(UI[langSel.value].gameOver); if(score>best){ best=score; localStorage.setItem('flappy_km_best',best); bestEl.textContent=best } }
+async function endGame(){ 
+  if(gameOver) return; 
+  gameOver = true; 
+  running=false; 
+  playSound(aud.die); 
+  statusMessage(UI[langSel.value].gameOver); 
+  
+  // Save score to backend
+  if(score > 0) {
+    try {
+      const difficulty = diffSel.value;
+      const response = await fetch('/api/scores', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          score: score,
+          difficulty: difficulty,
+          player_name: localStorage.getItem('player_name') || 'Anonymous'
+        })
+      });
+      
+      if(response.ok) {
+        // Update local best if needed
+        if(score > best){ 
+          best = score; 
+          localStorage.setItem('flappy_km_best', best);
+          bestEl.textContent = best;
+        }
+      }
+    } catch(err) {
+      console.error('Failed to save score:', err);
+    }
+  }
+}
 
 function collideRect(b, r){
   // treat bird as rectangle centered
@@ -331,6 +366,9 @@ canvas.addEventListener('drop', e=>{
 window._flappy = {startGame, endGame, assets, aud};
 
 </script>
+
+<script src="./flappy-web/js/game.js"></script>
+
 </body>
 </html>
 

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Bird - Khmer Edition</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./flappy-web/css/style.css">
 </head>
 <body>
   <header class="container">
     <div class="game">
       <ul>
-        <li class="site-brand"><img src="./images/download (1).png" alt="FlipFlop logo"><span style="font-weight:700;color:var(--text)">FlipFlop Bird</span></li>
+        <li class="site-brand"><img src="./flappy_images/download (1).png" alt="FlipFlop logo"><span style="font-weight:700;color:var(--text)">FlipFlop Bird</span></li>
         <li><a href="./index.html">Game</a></li>
         <li><a href="./leaderboard.html" class="primary">Leaderboard</a></li>
         <li><a href="./about.html">About</a></li>
@@ -20,10 +20,68 @@
   </header>
 
   <main class="container">
-    <section class="leaderboard" id="leaderboard">
-      <h1>The leaderboard will be available soon — play to post your high score!</h1>
-      <h1>The leaderboard will be landing shortly</h1>
+    <section class="card leaderboard" id="leaderboard">
+      <h1>Top Scores</h1>
+      <div class="difficulty-selector">
+        <label for="difficultySelect">Difficulty:</label>
+        <select id="difficultySelect">
+          <option value="easy">ស្រាល (Easy)</option>
+          <option value="normal" selected>ធម្មតា (Normal)</option>
+          <option value="hard">ពិបាក (Hard)</option>
+        </select>
+      </div>
+      <div class="scores-list">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Score</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="scoresTableBody">
+            <!-- Scores will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
+
+  <script>
+    async function loadScores() {
+      const difficulty = document.getElementById('difficultySelect').value;
+      try {
+        const response = await fetch(`/api/scores?difficulty=${difficulty}`);
+        const scores = await response.json();
+        
+        const tableBody = document.getElementById('scoresTableBody');
+        tableBody.innerHTML = '';
+        
+        scores.forEach((score, index) => {
+          const row = document.createElement('tr');
+          const date = new Date(score.date).toLocaleDateString();
+          
+          row.innerHTML = `
+            <td>#${index + 1}</td>
+            <td>${score.name}</td>
+            <td>${score.score}</td>
+            <td>${date}</td>
+          `;
+          
+          tableBody.appendChild(row);
+        });
+      } catch (error) {
+        console.error('Error loading scores:', error);
+      }
+    }
+
+    // Load scores when difficulty changes
+    document.getElementById('difficultySelect').addEventListener('change', loadScores);
+    
+    // Load scores on page load
+    loadScores();
+  </script>
+  
 </body>
 </html>
