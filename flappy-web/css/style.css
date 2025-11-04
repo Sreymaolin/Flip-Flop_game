@@ -1,13 +1,3 @@
-/* *{box-sizing:border-box;margin:0;padding:0}
-body{background:#87ceeb;font-family:Helvetica,Arial,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh}
-.wrap{position:relative}
-canvas{display:block;background:#70c5ce;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.2)}
-.ui{position:absolute;left:10px;top:10px;display:flex;gap:10px;align-items:center}
-#startBtn{padding:8px 12px;border-radius:6px;border:none;cursor:pointer}
-#score{background:rgba(255,255,255,0.8);padding:6px 10px;border-radius:6px;font-weight:bold}
-.hint{color:#fff;text-align:center;margin-top:10px;font-size:14px} */
-
-
 html, body{
   height:100%;
   margin:0;
@@ -282,3 +272,184 @@ select,input[type=file],input[type=range],textarea{
   }
 }
 
+
+
+
+
+
+.game-preview {
+            background: linear-gradient(to bottom, #87CEEB, #98FB98);
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+            border-right: 3px solid #e0e0e0;
+        }
+        
+.web-preview {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .stats {
+            background: rgb(145, 144, 144);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+.controls {
+           background: rgb(145, 144, 144);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-flap {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #2196F3;
+        }
+        
+        .instructions h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .status {
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid #ffeaa7;
+        } */
+        
+        /* Game elements for web preview */
+        .bird {
+            position: absolute;
+            width: 40px;
+            height: 30px;
+            background: #FFD700;
+            border-radius: 50% 50% 40% 40%;
+            left: 80px;
+            z-index: 10;
+            transition: top 0.1s ease;
+        }
+        
+        .bird::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #FF5722;
+            border-radius: 50%;
+            top: 8px;
+            right: -6px;
+        }
+        
+        .pipe {
+            position: absolute;
+            width: 70px;
+            background: linear-gradient(to right, #2E7D32, #4CAF50);
+            border-left: 3px solid #1B5E20;
+            border-right: 3px solid #1B5E20;
+        }
+        
+        .ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(to top, #8D6E63, #5D4037);
+            z-index: 5;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-preview {
+                border-right: none;
+                border-bottom: 3px solid #e0e0e0;
+                height: 400px;
+            }
+        }

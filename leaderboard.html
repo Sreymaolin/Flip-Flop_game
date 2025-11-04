@@ -16,72 +16,8 @@
         <li><a href="./about.html">About</a></li>
         <li><a href="./privacy.html">Privacy Policy</a></li>
       </ul>
+      <p>The leaderboard will be landing shortly</p>
     </div>
   </header>
-
-  <main class="container">
-    <section class="card leaderboard" id="leaderboard">
-      <h1>Top Scores</h1>
-      <div class="difficulty-selector">
-        <label for="difficultySelect">Difficulty:</label>
-        <select id="difficultySelect">
-          <option value="easy">ស្រាល (Easy)</option>
-          <option value="normal" selected>ធម្មតា (Normal)</option>
-          <option value="hard">ពិបាក (Hard)</option>
-        </select>
-      </div>
-      <div class="scores-list">
-        <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Score</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody id="scoresTableBody">
-            <!-- Scores will be populated by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    async function loadScores() {
-      const difficulty = document.getElementById('difficultySelect').value;
-      try {
-        const response = await fetch(`/api/scores?difficulty=${difficulty}`);
-        const scores = await response.json();
-        
-        const tableBody = document.getElementById('scoresTableBody');
-        tableBody.innerHTML = '';
-        
-        scores.forEach((score, index) => {
-          const row = document.createElement('tr');
-          const date = new Date(score.date).toLocaleDateString();
-          
-          row.innerHTML = `
-            <td>#${index + 1}</td>
-            <td>${score.name}</td>
-            <td>${score.score}</td>
-            <td>${date}</td>
-          `;
-          
-          tableBody.appendChild(row);
-        });
-      } catch (error) {
-        console.error('Error loading scores:', error);
-      }
-    }
-
-    // Load scores when difficulty changes
-    document.getElementById('difficultySelect').addEventListener('change', loadScores);
-    
-    // Load scores on page load
-    loadScores();
-  </script>
-  
 </body>
 </html>
