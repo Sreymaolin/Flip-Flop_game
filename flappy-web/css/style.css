@@ -1,21 +1,8 @@
-html,
-body {
-  height: 100%;
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  background: linear-gradient(180deg, var(--bg) 0%, #4c79b7 100%);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: transparent;
-}
 
-html {
-  scroll-behavior: smooth;
-}
-
+/* Base variables */
 :root {
-  --bg: #4578a8;
+  --bg-start: #4578a8;
+  --bg-end: #4c79b7;
   --panel: #2f3438;
   --card: #ffffffbb;
   --accent: #ffd24a;
@@ -24,15 +11,65 @@ html {
   --text: #eef6ff;
   --muted: #cfd8e3;
   --max-width: 1100px;
+  --ui-bg-light-start: #dff8ff;
+  --ui-bg-light-end: #ffffffcc;
+  --ui-text-dark: #023;
 }
 
-/* page container */
+/* Reset / base */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans Khmer';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+  background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  color: var(--text);
+}
+
+/* Page container (center column) */
 .container {
   max-width: var(--max-width);
   margin: 28px auto;
   padding: 16px;
 }
 
+/* Header container override */
+header.container {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 14px;
+}
+
+/* Game header / brand */
+header .game ul {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.site-brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: var(--text);
+}
+.site-brand img {
+  height: 36px;
+  width: auto;
+  border-radius: 8px;
+}
+
+/* Main game layout */
 .game {
   display: flex;
   flex-wrap: wrap;
@@ -41,8 +78,8 @@ html {
   justify-content: center;
 }
 
-/* make the inner content centered and card-like */
-.game>ul {
+/* Inner card */
+.game > ul {
   list-style: none;
   margin: 0;
   padding: 12px 18px;
@@ -57,8 +94,8 @@ html {
   flex-wrap: wrap;
 }
 
-/* logo / screenshot image */
-.game>ul img {
+/* Logo / screenshot image */
+.game > ul img {
   width: 100px;
   max-width: 140px;
   height: auto;
@@ -69,8 +106,8 @@ html {
   background: rgba(255, 255, 255, 0.03);
 }
 
-/* nav links container inside ul (anchors are direct children) */
-.game>ul a {
+/* Nav links inside the card */
+.game > ul a {
   display: inline-block;
   padding: 10px 14px;
   text-decoration: none;
@@ -79,17 +116,18 @@ html {
   border-radius: 8px;
   font-weight: 700;
   transition: all 160ms ease;
+  border: none;
 }
 
-/* primary link look (first link can be highlighted) */
-.game>ul a.primary {
+/* Primary / highlighted link */
+.game > ul a.primary {
   background: rgba(0, 0, 0, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-/* hover / focus states */
-.game>ul a:hover,
-.game>ul a:focus {
+/* Hover / focus */
+.game > ul a:hover,
+.game > ul a:focus {
   transform: translateY(-3px);
   color: var(--panel);
   background: var(--link-hover);
@@ -97,89 +135,89 @@ html {
   outline: none;
 }
 
-/* card   */
-.about,
-.leaderboard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* card privacy */
-
-.privacy {
-  padding: 20px;
-  /* gap: 20px; */
-
-}
-
-/* app layout */
+/* Layout wrap for canvas + sidebar */
 .wrap {
-  color: black;
   display: flex;
   gap: 24px;
   align-items: flex-start;
   justify-content: center;
   padding: 28px;
   flex-wrap: wrap;
+  color: var(--ui-text-dark);
 }
 
-/* .wrap >lang >difficulty{
-  background-color: black;
-} */
+/* Canvas card */
 .canvas-wrap {
   background: transparent;
   border-radius: 8px;
   padding: 8px;
+  width: 100%;
+  max-width: 640px;
 }
 
+/* Canvas element */
 canvas {
-  background: #aee0ff;
-  border-radius: 8px;
   display: block;
-  max-width: 100%;
+  border-radius: 8px;
+  width: 100%;
   height: auto;
+  background: #aee0ff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 }
 
+/* Sidebar (controls / settings) */
 .sidebar {
-
   width: 320px;
   max-width: 92vw;
   background: var(--panel);
   padding: 18px;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  color: var(--text);
 }
 
+/* Typography */
 h1 {
   font-size: 20px;
   margin: 0 0 8px 0;
   color: var(--text);
 }
-
 label {
   display: block;
   margin-top: 10px;
   font-size: 13px;
   color: var(--muted);
 }
+.lead {
+  font-size: 15px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.small {
+  font-size: 12px;
+  color: var(--muted);
+}
 
+/* Inputs */
 select,
 input[type=file],
 input[type=range],
-textarea {
+textarea,
+input[type=text],
+input[type=number] {
   width: 100%;
   padding: 8px;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(0, 0, 0, 0.06);
   color: var(--text);
+  font-size: 14px;
 }
 
+/* Buttons */
 .btn {
   display: inline-block;
-  padding: 10px 10px;
+  padding: 10px 12px;
   margin-top: 10px;
   background: linear-gradient(180deg, #38a1db, #2b7fb1);
   border-radius: 8px;
@@ -188,18 +226,37 @@ textarea {
   cursor: pointer;
   border: none;
   font-weight: 700;
+  transition: all 0.18s ease;
 }
 
+/* Button hover animation */
+.btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* Secondary button */
 .btn.secondary {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--link);
 }
 
-.muted {
-  color: var(--muted);
-  font-size: 13px;
+/* HUD / top controls inside game card */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  width: 100%;
 }
 
+.score {
+  font-weight: 700;
+  color: var(--ui-text-dark);
+}
+
+/* Info boxes */
 .info {
   background: rgba(0, 0, 0, 0.12);
   padding: 10px;
@@ -209,53 +266,21 @@ textarea {
   color: var(--text);
 }
 
-.small {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.row {
-  display: flex;
-  gap: 8px;
-}
-
-.center {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* helper classes */
-.lead {
-  font-size: 15px;
-  color: var(--muted);
-  margin-top: 6px;
-}
-
-.nav {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.site-brand {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.site-brand img {
-  width: 56px;
-  height: 56px;
+/* Center message */
+.centerMsg {
+  padding: 10px;
+  text-align: center;
+  margin-top: 8px;
   border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--ui-text-dark);
 }
 
-/* leaderboard styles */
+/* Scores / leaderboard */
 .scores-list {
   width: 100%;
   margin-top: 20px;
 }
-
 .scores-list table {
   width: 100%;
   border-collapse: collapse;
@@ -263,126 +288,107 @@ textarea {
   border-radius: 8px;
   overflow: hidden;
 }
-
 .scores-list th,
 .scores-list td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
 }
-
 .scores-list th {
   background: rgba(0, 0, 0, 0.2);
-  color: var(--text);
   font-weight: 600;
 }
-
 .scores-list tr:hover {
   background: rgba(255, 255, 255, 0.02);
 }
 
+/* Utility & helpers */
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Difficulty selector */
 .difficulty-selector {
   margin: 20px 0;
   width: 100%;
   max-width: 300px;
 }
 
-
-:root {
-  --bg: #70c5ff;
-  --accent: #ffde59;
-  --text: #023;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Inter, system-ui, -apple-system, 'Noto Sans Khmer', Roboto, 'Segoe UI', Arial;
-  background: linear-gradient(180deg, #9be7ff 0%, #70c5ff 70%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 18px;
-}
-
-header.container {
-  width: 100%;
-  max-width: 900px;
-  margin-bottom: 14px;
-}
-
-header .game ul {
-  display: flex;
-  gap: 12px;
-  list-style: none;
-  align-items: center
-}
-
-header .site-brand img {
-  height: 36px;
-  margin-right: 8px
-}
-
-.container {
-  width: 100%;
-  max-width: 480px;
-  background: linear-gradient(180deg, #dff8ff 0%, #ffffffcc 60%);
-  border-radius: 14px;
-  padding: 12px;
-  box-shadow: 0 20px 40px rgba(10, 30, 70, .12)
-}
-
-.hud {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px
-}
-
-.score {
-  font-weight: 700;
-  color: var(--text)
-}
-
-.btn {
-  background: #0366d6;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer
-}
-
-canvas {
-  display: block;
-  border-radius: 8px;
-  width: 100%;
-  height: auto;
-  background: transparent
-}
-
-.centerMsg {
-  padding: 10px;
-  text-align: center;
-  margin-top: 8px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, .7)
-}
-
+/* Footer */
 footer {
   font-size: 12px;
   color: #033;
   margin-top: 10px;
-  text-align: center
+  text-align: center;
 }
 
-@media (max-width:420px) {
-  .container {
-    padding: 8px
+/* Alternate light UI card */
+.ui-card {
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(180deg, var(--ui-bg-light-start) 0%, var(--ui-bg-light-end) 60%);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 20px 40px rgba(10, 30, 70, 0.12);
+  color: var(--ui-text-dark);
+  transition: box-shadow 0.25s ease;
+}
+
+/* Hover shadow effect */
+.ui-card:hover,
+.sidebar:hover {
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .wrap {
+    padding: 16px;
+    gap: 16px;
+  }
+  .canvas-wrap {
+    max-width: 560px;
+  }
+  .sidebar {
+    width: 100%;
+    max-width: 480px;
+  }
+}
+@media (max-width: 420px) {
+  .container,
+  .ui-card {
+    padding: 8px;
+    border-radius: 12px;
+  }
+  header .site-brand img {
+    height: 28px;
+  }
+  .game > ul {
+    padding: 10px;
+    gap: 10px;
   }
 }
